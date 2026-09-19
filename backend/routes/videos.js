@@ -220,28 +220,47 @@ router.get('/:id', (req, res) => {
 });
 
 
-// PUT /api/videos/:id/like  { like: true }
 
 
 // PUT /api/videos/:id/comments  { author, text }
+
 
 
 // GET /api/videos/:id/likes
 router.get('/:id/likes', (req, res) => {
   const id = req.params.id;
   const file = readJSON(videosFile);
-
+  
   const video = file.find((v) => v._id === id)
-
-
+  
+  
   // console.log(video)
   if (!video) {
     return res.status(404).send('No Video Found!!!');
   }
-
+  
   return res.status(200).json(video.likes)
 });
 
+// PUT /api/videos/:id/like  { like: true }
+router.put('/:id/like',(req,res)=>{
+    try{
+      let newLikes=0;
+      const id=req.params.id;
+      let videos=readJSON(videosFile).map((v)=>{
+         if(v._id===id){
+          newLikes=v.likes+1
+          return {...v,likes:newLikes};
+         }
+         return v;
+      });
+      writeJSON(videosFile,videos);
+      res.status(200).send({'likes':newLikes});
+    }
+    catch(err){
+      res.status(404).send('Something went wrong!!');
+    }
+})
 
 // GET /api/videos/:id/comments
 router.get('/:id/comments', (req, res) => {
@@ -257,11 +276,6 @@ router.get('/:id/comments', (req, res) => {
     res.status(404).json({ message: 'Something went wrong!!' })
   }
 });
-
-
-
-
-
 
 
 module.exports = router
