@@ -180,6 +180,22 @@ router.get('/:id', (req,res)=>{
 
 
 // GET /api/videos/:id/likes
+router.get('/:id/likes',(req,res)=>{
+  const id=req.params.id;
+    const file=readJSON(videosFile);
+    
+    const video=file.find((v)=>v._id===id)
+    
+    
+    // console.log(video)
+    if (!video){
+      return res.status(404).send('No Video Found!!!');
+    }
+
+    return res.status(200).json(video.likes)
+});
+
+
 // GET /api/videos/:id/comments
 
 
