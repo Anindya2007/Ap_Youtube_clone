@@ -188,7 +188,8 @@ router.post('/watch-history',(req,res)=>{
 
     if (!exist){ //For the scenario if the video is already there in the watch history
       const videos=readJSON(videosFile);
-      const history=videos.find((v)=>v._id=id);
+      const history=videos.find((v)=>v._id===id);
+      history.watchedAt=new Date();
       writeJSON(historyFile,[...history_file,history])
     }
 
