@@ -168,6 +168,17 @@ router.get('/watch-history', (req, res) => {
 
 });
 
+// DELETE /api/videos/watch-history — Clear history
+router.delete('/watch-history', (req, res) => {
+  try {
+    const file = writeJSON(historyFile, [])
+    res.status(200).send('Watch-History Cleared!!')
+  }
+  catch (err) {
+    res.status(404).send('Something went Wrong!!')
+  }
+});
+
 // GET /api/videos/:id
 router.get('/:id', (req, res) => {
 
@@ -228,7 +239,6 @@ router.get('/:id/comments', (req, res) => {
 // POST /api/videos/watch-history — Add to history
 
 
-// DELETE /api/videos/watch-history — Clear history
 
 
 
