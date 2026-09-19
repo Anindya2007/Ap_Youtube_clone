@@ -143,9 +143,34 @@ router.get('/stream/:id', (req, res) => {
 })
 
 // GET /api/videos - list (supports ?title=)
+router.get('/', (req, res) => {
+  const videos = readJSON(videosFile);
+  const title = req.query.title;
+
+  const data= !title
+  ? videos
+  : videos.filter((video)=> video.title.toLowerCase().includes(title.toLowerCase()));
+
+  res.json(data);
+})
 
 
 // GET /api/videos/:id
+router.get('/:id', (req,res)=>{
+  
+    const id=req.params.id;
+    const file=readJSON(videosFile);
+    
+    
+    const video=file.find((v)=>v._id===id)
+   
+
+    if (!video){
+      return res.status(404).send('No Video Found!!!');
+    }
+
+    return res.status(200).json(video)
+});
 
 
 // PUT /api/videos/:id/like  { like: true }
@@ -155,12 +180,11 @@ router.get('/stream/:id', (req, res) => {
 
 
 // GET /api/videos/:id/likes
-
-
 // GET /api/videos/:id/comments
 
 
 // GET /api/videos/watch-history — Get watch history
+
 
 
 // POST /api/videos/watch-history — Add to history
