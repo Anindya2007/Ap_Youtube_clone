@@ -147,29 +147,42 @@ router.get('/', (req, res) => {
   const videos = readJSON(videosFile);
   const title = req.query.title;
 
-  const data= !title
-  ? videos
-  : videos.filter((video)=> video.title.toLowerCase().includes(title.toLowerCase()));
+  const data = !title
+    ? videos
+    : videos.filter((video) => video.title.toLowerCase().includes(title.toLowerCase()));
 
   res.json(data);
 })
 
+// GET /api/videos/watch-history — Get watch history
+router.get('/watch-history', (req, res) => {
+  console.log("Getting Watch History");
+  try {
+    const history_file = readJSON(historyFile);
+
+    res.status(200).send(history_file);
+  }
+  catch (err) {
+    res.status(404).json({ 'message': 'Something went wrong!!', 'error': err });
+  }
+
+});
 
 // GET /api/videos/:id
-router.get('/:id', (req,res)=>{
-  
-    const id=req.params.id;
-    const file=readJSON(videosFile);
-    
-    
-    const video=file.find((v)=>v._id===id)
-   
+router.get('/:id', (req, res) => {
 
-    if (!video){
-      return res.status(404).send('No Video Found!!!');
-    }
+  const id = req.params.id;
+  const file = readJSON(videosFile);
 
-    return res.status(200).json(video)
+
+  const video = file.find((v) => v._id === id)
+
+
+  if (!video) {
+    return res.status(404).send('No Video Found!!!');
+  }
+
+  return res.status(200).json(video)
 });
 
 
@@ -180,40 +193,36 @@ router.get('/:id', (req,res)=>{
 
 
 // GET /api/videos/:id/likes
-router.get('/:id/likes',(req,res)=>{
-  const id=req.params.id;
-    const file=readJSON(videosFile);
-    
-    const video=file.find((v)=>v._id===id)
-    
-    
-    // console.log(video)
-    if (!video){
-      return res.status(404).send('No Video Found!!!');
-    }
+router.get('/:id/likes', (req, res) => {
+  const id = req.params.id;
+  const file = readJSON(videosFile);
 
-    return res.status(200).json(video.likes)
+  const video = file.find((v) => v._id === id)
+
+
+  // console.log(video)
+  if (!video) {
+    return res.status(404).send('No Video Found!!!');
+  }
+
+  return res.status(200).json(video.likes)
 });
 
 
 // GET /api/videos/:id/comments
-router.get('/:id/comments',(req,res)=>{
-  try{
-    const file=readJSON(videosFile);
-    const id=req.params.id;
-    const comments=file.find((v)=>v._id===id).comments;
+router.get('/:id/comments', (req, res) => {
+  try {
+    const file = readJSON(videosFile);
+    const id = req.params.id;
+    const comments = file.find((v) => v._id === id).comments;
 
     res.status(200).send(comments);
 
   }
-  catch(err){
-    res.status(404).json({message:'Something went wrong!!'})
+  catch (err) {
+    res.status(404).json({ message: 'Something went wrong!!' })
   }
-})
-
-
-// GET /api/videos/watch-history — Get watch history
-
+});
 
 
 // POST /api/videos/watch-history — Add to history
