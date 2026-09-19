@@ -197,6 +197,19 @@ router.get('/:id/likes',(req,res)=>{
 
 
 // GET /api/videos/:id/comments
+router.get('/:id/comments',(req,res)=>{
+  try{
+    const file=readJSON(videosFile);
+    const id=req.params.id;
+    const comments=file.find((v)=>v._id===id).comments;
+
+    res.status(200).send(comments);
+
+  }
+  catch(err){
+    res.status(404).json({message:'Something went wrong!!'})
+  }
+})
 
 
 // GET /api/videos/watch-history — Get watch history
