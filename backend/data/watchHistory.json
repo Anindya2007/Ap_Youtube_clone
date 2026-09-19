@@ -1,38 +1,33 @@
 [
   {
-    "videoId": "mr8yb6x5ebvs49t",
-    "watchedAt": "2026-07-06T08:36:41.752Z"
-  },
-  {
-    "videoId": "mr8yb6x5ebvs49t",
-    "watchedAt": "2026-07-06T08:35:22.702Z"
-  },
-  {
-    "videoId": "mr8yb6x5ebvs49t",
-    "watchedAt": "2026-07-06T08:34:26.641Z"
-  },
-  {
-    "videoId": "mr8yb6x5ebvs49t",
-    "watchedAt": "2026-07-06T08:29:00.371Z"
-  },
-  {
-    "videoId": "mr8yb6x5ebvs49t",
-    "watchedAt": "2026-07-06T08:28:35.660Z"
-  },
-  {
-    "videoId": "mr8yb6x5ebvs49t",
-    "watchedAt": "2026-07-06T08:28:28.190Z"
-  },
-  {
-    "videoId": "mr8yb6x5ebvs49t",
-    "watchedAt": "2026-07-06T08:28:07.758Z"
-  },
-  {
-    "videoId": "mr8xn70plyqzfkg",
-    "watchedAt": "2026-07-06T08:07:08.666Z"
-  },
-  {
-    "videoId": "mr8xn70plyqzfkg",
-    "watchedAt": "2026-07-06T08:06:44.441Z"
+    "_id": "mr8yb6x5ebvs49t",
+    "title": "Big Buck Bunny",
+    "description": "A short animated film about a giant bunny and friendship.",
+    "videoUrl": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4",
+    "localFile": "Big_Buck_Bunny_720_10s_1MB.mp4",
+    "thumbnail": "https://picsum.photos/id/1025/640/360",
+    "likes": 18,
+    "views": 447,
+    "comments": [
+      {
+        "_id": "mr8yb6x5xeuwg38",
+        "author": "Alice",
+        "text": "Nice video!",
+        "createdAt": "2026-07-06T08:21:31.721Z"
+      },
+      {
+        "_id": "mr8yb6x5mvzohg1",
+        "author": "Bob",
+        "text": "Loved the animation.",
+        "createdAt": "2026-07-06T08:21:31.721Z"
+      },
+      {
+        "_id": "mr8yro4v40oswsf",
+        "author": "Student",
+        "text": "Nice demo",
+        "createdAt": "2026-07-06T08:34:20.527Z"
+      }
+    ],
+    "createdAt": "2026-07-06T08:21:31.721Z"
   }
 ]

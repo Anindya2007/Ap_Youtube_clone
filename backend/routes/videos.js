@@ -156,7 +156,6 @@ router.get('/', (req, res) => {
 
 // GET /api/videos/watch-history — Get watch history
 router.get('/watch-history', (req, res) => {
-  console.log("Getting Watch History");
   try {
     const history_file = readJSON(historyFile);
 
@@ -165,18 +164,41 @@ router.get('/watch-history', (req, res) => {
   catch (err) {
     res.status(404).json({ 'message': 'Something went wrong!!', 'error': err });
   }
-
+  
 });
 
 // DELETE /api/videos/watch-history — Clear history
 router.delete('/watch-history', (req, res) => {
   try {
-    const file = writeJSON(historyFile, [])
+    writeJSON(historyFile, [])
     res.status(200).send('Watch-History Cleared!!')
   }
   catch (err) {
     res.status(404).send('Something went Wrong!!')
   }
+});
+
+// POST /api/videos/watch-history — Add to history
+router.post('/watch-history',(req,res)=>{
+  try {
+    const history_file=readJSON(historyFile);
+    const id=req.body.videoId;
+
+    const exist=history_file.find((v)=>v._id===id);
+
+    if (!exist){ //For the scenario if the video is already there in the watch history
+      const videos=readJSON(videosFile);
+      const history=videos.find((v)=>v._id=id);
+      writeJSON(historyFile,[...history_file,history])
+    }
+
+    res.status(200).send(history_file);
+  }
+  catch (err) {
+    res.status(404).json({ 'message': 'Something went wrong!!', 'error': err });
+  }
+
+    
 });
 
 // GET /api/videos/:id
@@ -236,7 +258,6 @@ router.get('/:id/comments', (req, res) => {
 });
 
 
-// POST /api/videos/watch-history — Add to history
 
 
 
