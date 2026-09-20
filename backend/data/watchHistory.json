@@ -30,5 +30,24 @@
     ],
     "createdAt": "2026-07-06T08:21:31.721Z",
     "watchedAt": "2026-09-19T16:04:49.615Z"
+  },
+  {
+    "_id": "mr8yb6x5ggu3t78",
+    "title": "Sintel Trailer",
+    "description": "The official short trailer for the Blender Open Movie Sintel.",
+    "videoUrl": "https://media.w3.org/2010/05/sintel/trailer.mp4",
+    "thumbnail": "https://picsum.photos/id/1035/640/360",
+    "likes": 25,
+    "views": 617,
+    "comments": [
+      {
+        "_id": "mr8yb6x58fwh08d",
+        "author": "Mira",
+        "text": "The storytelling is amazing.",
+        "createdAt": "2026-07-06T08:21:31.721Z"
+      }
+    ],
+    "createdAt": "2026-07-06T08:21:31.721Z",
+    "watchedAt": "2026-09-20T15:05:52.875Z"
   }
 ]

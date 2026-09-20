@@ -164,7 +164,7 @@ router.get('/watch-history', (req, res) => {
   catch (err) {
     res.status(404).json({ 'message': 'Something went wrong!!', 'error': err });
   }
-  
+
 });
 
 // DELETE /api/videos/watch-history — Clear history
@@ -179,18 +179,18 @@ router.delete('/watch-history', (req, res) => {
 });
 
 // POST /api/videos/watch-history — Add to history
-router.post('/watch-history',(req,res)=>{
+router.post('/watch-history', (req, res) => {
   try {
-    const history_file=readJSON(historyFile);
-    const id=req.body.videoId;
+    const history_file = readJSON(historyFile);
+    const id = req.body.videoId;
 
-    const exist=history_file.find((v)=>v._id===id);
+    const exist = history_file.find((v) => v._id === id);
 
-    if (!exist){ //For the scenario if the video is already there in the watch history
-      const videos=readJSON(videosFile);
-      const history=videos.find((v)=>v._id===id);
-      history.watchedAt=new Date();
-      writeJSON(historyFile,[...history_file,history])
+    if (!exist) { //For the scenario if the video is already there in the watch history
+      const videos = readJSON(videosFile);
+      const history = videos.find((v) => v._id === id);
+      history.watchedAt = new Date();
+      writeJSON(historyFile, [...history_file, history])
     }
 
     res.status(200).send(history_file);
@@ -199,7 +199,7 @@ router.post('/watch-history',(req,res)=>{
     res.status(404).json({ 'message': 'Something went wrong!!', 'error': err });
   }
 
-    
+
 });
 
 // GET /api/videos/:id
@@ -222,44 +222,42 @@ router.get('/:id', (req, res) => {
 
 
 
-// PUT /api/videos/:id/comments  { author, text }
-
 
 
 // GET /api/videos/:id/likes
 router.get('/:id/likes', (req, res) => {
   const id = req.params.id;
   const file = readJSON(videosFile);
-  
+
   const video = file.find((v) => v._id === id)
-  
-  
+
+
   // console.log(video)
   if (!video) {
     return res.status(404).send('No Video Found!!!');
   }
-  
+
   return res.status(200).json(video.likes)
 });
 
 // PUT /api/videos/:id/like  { like: true }
-router.put('/:id/like',(req,res)=>{
-    try{
-      let newLikes=0;
-      const id=req.params.id;
-      let videos=readJSON(videosFile).map((v)=>{
-         if(v._id===id){
-          newLikes=v.likes+1
-          return {...v,likes:newLikes};
-         }
-         return v;
-      });
-      writeJSON(videosFile,videos);
-      res.status(200).send({'likes':newLikes});
-    }
-    catch(err){
-      res.status(404).send('Something went wrong!!');
-    }
+router.put('/:id/like', (req, res) => {
+  try {
+    let newLikes = 0;
+    const id = req.params.id;
+    let videos = readJSON(videosFile).map((v) => {
+      if (v._id === id) {
+        newLikes = v.likes + 1
+        return { ...v, likes: newLikes };
+      }
+      return v;
+    });
+    writeJSON(videosFile, videos);
+    res.status(200).send({ 'likes': newLikes });
+  }
+  catch (err) {
+    res.status(404).send('Something went wrong!!');
+  }
 })
 
 // GET /api/videos/:id/comments
@@ -277,5 +275,32 @@ router.get('/:id/comments', (req, res) => {
   }
 });
 
+// PUT /api/videos/:id/comments  { author, text }
+router.put('/:id/comments', (req, res) => {
+  try {
+    const id = req.params.id;
+    const { author, text } = req.body;
+    const commentId = Math.random().toString(36).substr(2, 9);
+    const user = { '_id': commentId, 'text': text, 'author': author, 'createdAt': new Date().toISOString() };
+    let videos = readJSON(videosFile);
+    let updatedComments = [];
+    
+    videos = videos.map((v) => {
+      if (v._id === id) {
+        updatedComments = [...v.comments, user];
+        return { ...v, 'comments': updatedComments }
+      }
+      return v;
+    });
+    
+    writeJSON(videosFile, videos);
+    res.status(200).json(updatedComments);
+
+  }
+  catch (err) {
+    console.error(err);
+    res.status(404).json({})
+  }
+})
 
 module.exports = router
